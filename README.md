@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CORPORATE DOCUMENT MANAGEMENT SYSTEM (CDMS)
 
 ## Project Overview
@@ -144,3 +145,6 @@ If you want, I can also:
 - Create a `postman_collection.json` with example requests for the documented endpoints.
 
 If you'd like any changes to the README structure or extra details added, tell me which parts to expand.
+=======
+
+>>>>>>> c69c8ab6fc271a55fb358f2b17ae360e40ecc570
