@@ -29,7 +29,7 @@ Create a `.env` file in the project root with the following variables:
 ```
 MONGO_URI=mongodb://localhost:27017/cdms
 JWT_SECRET=your_jwt_secret
-BASE_URL=http://localhost:5000
+BASE_URL= http://localhost:5000
 PORT=5000
 ```
 
@@ -61,7 +61,7 @@ npm start
 
 **API Documentation**
 
-Base URL (local): `http://localhost:5000`
+Base URL (local): ` http://localhost:5000`
 
 - **Auth**
 	- `POST /api/auth/register` — Register a new user
@@ -89,7 +89,7 @@ Base URL (local): `http://localhost:5000`
 		- Example curl (bash):
 
 ```
-curl -X POST "http://localhost:5000/api/documents" \
+curl -X POST " http://localhost:5000/api/documents" \
 	-H "Authorization: Bearer $TOKEN" \
 	-F "file=@/path/to/document.pdf" \
 	-F "title=Department Policy" \

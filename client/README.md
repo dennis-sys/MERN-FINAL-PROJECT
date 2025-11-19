@@ -53,12 +53,12 @@ npm run preview
 
 ## Environment Variables
 
-- `VITE_API_URL` — Base URL of the backend API (e.g. `http://localhost:5000`).
+- `VITE_API_URL` — Base URL of the backend API (e.g. ` http://localhost:5000`).
 
 Create a `.env` file at the project root or set the variable in your environment. Example `.env`:
 
 ```text
-VITE_API_URL=http://localhost:5000
+VITE_API_URL= http://localhost:5000
 ```
 
 In client code, access it with `import.meta.env.VITE_API_URL`.

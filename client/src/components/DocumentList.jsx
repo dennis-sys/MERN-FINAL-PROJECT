@@ -42,7 +42,7 @@ export default function DocumentList() {
         // 🔥 Ensure absolute URL
         const finalUrl = d.fileUrl.startsWith("http")
           ? d.fileUrl
-          : `http://localhost:5000${d.fileUrl}`;
+          : ` http://localhost:5000${d.fileUrl}`;
 
         return (
           <div
