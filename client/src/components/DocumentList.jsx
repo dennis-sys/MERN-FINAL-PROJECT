@@ -39,11 +39,10 @@ export default function DocumentList() {
       {documents.length === 0 && <p>No documents yet.</p>}
 
       {documents.map((d) => {
-        // Use correct base URL from .env
-const finalUrl = d.fileUrl.startsWith("http")
-  ? d.fileUrl
-  : `${import.meta.env.VITE_API_URL}${d.fileUrl}`;
-
+        // 🔥 Ensure absolute URL
+        const finalUrl = d.fileUrl.startsWith("http")
+          ? d.fileUrl
+          : ` http://localhost:5000${d.fileUrl}`;
 
         return (
           <div
