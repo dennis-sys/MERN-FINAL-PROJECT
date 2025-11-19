@@ -1,24 +1,46 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import path from "path";
 import { connectDB } from "./config/db.js";
+
 import postRoutes from "./routes/postRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
-import { errorHandler } from "./middleware/errorHandler.js";
+import authRoutes from "./routes/authRoutes.js";
+import documentRoutes from "./routes/documentRoutes.js";
 
 dotenv.config();
-connectDB();
-
 const app = express();
-app.use(cors());
+
+// CORS (important for PDF loading)
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true
+  })
+);
+
 app.use(express.json());
 
-// Routes
+// ✅ Serve uploaded files (PDFs)
+app.use("/uploads", express.static(path.resolve("uploads")));
+
+// =================== ROUTES =====================
+app.use("/api/auth", authRoutes);
+app.use("/api/documents", documentRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/categories", categoryRoutes);
 
-// Error Handling
-app.use(errorHandler);
+// Error handling
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).json({ message: err.message });
+});
 
+// =================== START SERVER =====================
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+  connectDB();
+});

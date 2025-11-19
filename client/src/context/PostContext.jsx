@@ -5,16 +5,18 @@ export const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
   const api = useApi();
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]); // now it's documents
 
   const fetchPosts = async () => {
-    const data = await api.get("/api/posts");
-    setPosts(data);
+    try {
+      const data = await api.get("/api/documents");
+      setPosts(data);
+    } catch (err) {
+      console.error("Failed to fetch documents", err);
+    }
   };
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  useEffect(() => { fetchPosts(); }, []);
 
   return (
     <PostContext.Provider value={{ posts, fetchPosts }}>
@@ -22,3 +24,4 @@ export const PostProvider = ({ children }) => {
     </PostContext.Provider>
   );
 };
+
