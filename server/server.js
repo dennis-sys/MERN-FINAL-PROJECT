@@ -15,10 +15,14 @@ const app = express();
 // CORS (important for PDF loading)
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    credentials: true
+    origin: [
+      "http://localhost:5173",
+      "https://candid-manatee-da20d7.netlify.app"
+    ],
+    credentials: true,
   })
 );
+
 
 app.use(express.json());
 
