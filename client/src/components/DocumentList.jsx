@@ -39,8 +39,11 @@ export default function DocumentList() {
       {documents.length === 0 && <p>No documents yet.</p>}
 
       {documents.map((d) => {
-        // 🔥 Cloudinary returns full URL already — no need for VITE_API_URL
-        const finalUrl = d.fileUrl;
+        // 🔥 Completely sanitize fileUrl
+        const cleanUrl = (d.fileUrl || "").trim();
+
+        // 🔥 Always Cloudinary full URL — never prefix backend or Netlify
+        const finalUrl = cleanUrl;
 
         return (
           <div

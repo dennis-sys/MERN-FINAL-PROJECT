@@ -3,6 +3,11 @@ import React from "react";
 export default function PdfModal({ fileUrl, onClose }) {
   if (!fileUrl) return null;
 
+  // 🔥 Ensure Cloudinary forces PDF rendering inside iframe
+  const viewUrl = fileUrl.includes("cloudinary")
+    ? `${fileUrl}?raw=1`
+    : fileUrl;
+
   return (
     <div
       style={{
@@ -49,7 +54,7 @@ export default function PdfModal({ fileUrl, onClose }) {
 
         {/* PDF VIEWER */}
         <iframe
-          src={fileUrl}
+          src={viewUrl}
           title="PDF Preview"
           style={{ width: "100%", height: "100%", border: "none" }}
         ></iframe>
@@ -57,4 +62,3 @@ export default function PdfModal({ fileUrl, onClose }) {
     </div>
   );
 }
-
