@@ -19,8 +19,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: "cdms-documents",
-    resource_type: "raw",  // IMPORTANT for PDFs
-    allowed_formats: ["pdf"],
+    resource_type: "auto",  // IMPORTANT for PDFs
+    allowedFormats: ["pdf"],
   },
 });
 
