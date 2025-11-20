@@ -20,7 +20,7 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     return {
       folder: "cdms-documents",
-      resource_type: "auto",      // ← REQUIRED for PDFs
+      resource_type: "raw",      // ← REQUIRED for PDFs
       allowed_formats: ["pdf"],
       public_id: file.originalname.split(".")[0],  // optional but safe
     };
