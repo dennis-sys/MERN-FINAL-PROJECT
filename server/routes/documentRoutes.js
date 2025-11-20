@@ -14,13 +14,16 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
-// Cloudinary storage for PDFs
+// Correct Cloudinary RAW storage for PDFs
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: {
-    folder: "cdms-documents",
-    resource_type: "auto",  // IMPORTANT for PDFs
-    allowedFormats: ["pdf"],
+  params: async (req, file) => {
+    return {
+      folder: "cdms-documents",
+      resource_type: "raw",      // ← REQUIRED for PDFs
+      allowed_formats: ["pdf"],
+      public_id: file.originalname.split(".")[0],  // optional but safe
+    };
   },
 });
 
