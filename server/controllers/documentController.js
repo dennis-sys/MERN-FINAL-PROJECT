@@ -1,3 +1,4 @@
+// controllers/documentController.js
 import Document from "../models/Document.js";
 
 export const getDocuments = async (req, res, next) => {
@@ -14,10 +15,9 @@ export const getDocuments = async (req, res, next) => {
 
 export const getDocument = async (req, res, next) => {
   try {
-    const doc = await Document.findById(req.params.id).populate(
-      "uploadedBy",
-      "email department"
-    );
+    const doc = await Document.findById(req.params.id)
+      .populate("uploadedBy", "email department");
+
     res.json(doc);
   } catch (err) {
     next(err);
@@ -31,8 +31,8 @@ export const createDocument = async (req, res, next) => {
     if (!req.file)
       return res.status(400).json({ message: "File is required" });
 
-    // 🔥 Cloudinary gives full URL automatically
-    const fileUrl = req.file.path; // e.g. https://res.cloudinary.com/.../file.pdf
+    // Cloudinary gives file URL here:
+    const fileUrl = req.file.path;
 
     const doc = new Document({
       title,
@@ -40,13 +40,12 @@ export const createDocument = async (req, res, next) => {
       department,
       fileUrl,
       filename: req.file.originalname,
-      uploadedBy: req.user ? req.user._id : null,
+      uploadedBy: req.user ? req.user._id : null
     });
 
     await doc.save();
     res.json(doc);
   } catch (err) {
-    console.error("Cloudinary upload error:", err);
     next(err);
   }
 };

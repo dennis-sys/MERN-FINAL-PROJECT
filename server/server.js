@@ -1,15 +1,8 @@
+// server.js
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import path from "path";
-import fs from "fs";   // <-- add this
 import { connectDB } from "./config/db.js";
-
-// Create uploads folder (Render won't create it)
-const uploadDir = path.resolve("uploads");
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir, { recursive: true });
-}
 
 import postRoutes from "./routes/postRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
@@ -19,7 +12,7 @@ import documentRoutes from "./routes/documentRoutes.js";
 dotenv.config();
 const app = express();
 
-// CORS (important for PDF loading)
+// CORS for frontend
 app.use(
   cors({
     origin: [
@@ -30,13 +23,9 @@ app.use(
   })
 );
 
-
 app.use(express.json());
 
-// ✅ Serve uploaded files (PDFs)
-app.use("/uploads", express.static(path.resolve("uploads")));
-
-// =================== ROUTES =====================
+// ---------------- ROUTES ----------------
 app.use("/api/auth", authRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/posts", postRoutes);
@@ -48,7 +37,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
-// =================== START SERVER =====================
+// ---------------- START SERVER ----------------
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
