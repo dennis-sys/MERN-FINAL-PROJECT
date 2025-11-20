@@ -4,6 +4,10 @@
 
 CORPORATE DOCUMENT MANAGEMENT SYSTEM (CDMS) is a MERN-stack web application that provides a central place to upload, serve, and manage corporate documents (PDFs) alongside a simple blog/posts and category system. It supports user registration and login, protected document uploads, serving uploaded PDF files, and basic CRUD for posts and documents.
 
+Video: https://drive.google.com/file/d/1P3UIm9I9HfTdr-Yo9it6ZiLdX7UZfeB7/view?usp=drive_link
+
+Webapp link: https://candid-manatee-da20d7.netlify.app/
+
 This repository contains two main folders: `server` (Express + MongoDB API) and `client` (React + Vite frontend).
 
 ## Setup Instructions
