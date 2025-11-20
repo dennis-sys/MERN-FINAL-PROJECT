@@ -34,7 +34,7 @@ npm install
 ```
 MONGO_URI=<your-mongodb-uri>
 JWT_SECRET=<your-jwt-secret>
-BASE_URL= http://localhost:5000
+BASE_URL=http://localhost:5000
 PORT=5000
 ```
 
@@ -47,7 +47,7 @@ node server.js
 npx nodemon server.js
 ```
 
-The server serves the API under ` http://localhost:5000/api` by default and uploaded files under ` http://localhost:5000/uploads`.
+The server serves the API under `http://localhost:5000/api` by default and uploaded files under `http://localhost:5000/uploads`.
 
 3) Client setup
 
@@ -63,7 +63,7 @@ npm run dev
 
 ## API Documentation
 
-Base URL (development): ` http://localhost:5000/api`
+Base URL (development): `http://localhost:5000/api`
 
 Authentication
 - **POST /api/auth/register** — Register a new user
