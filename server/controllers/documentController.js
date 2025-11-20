@@ -31,8 +31,8 @@ export const createDocument = async (req, res, next) => {
     if (!req.file)
       return res.status(400).json({ message: "File is required" });
 
-    // 🔥 Make absolute PDF URL
-    const fileUrl = `${process.env.BASE_URL}/uploads/${req.file.filename}`;
+    // 🔥 Cloudinary gives full URL automatically
+    const fileUrl = req.file.path; // e.g. https://res.cloudinary.com/.../file.pdf
 
     const doc = new Document({
       title,
@@ -40,12 +40,13 @@ export const createDocument = async (req, res, next) => {
       department,
       fileUrl,
       filename: req.file.originalname,
-      uploadedBy: req.user ? req.user._id : null
+      uploadedBy: req.user ? req.user._id : null,
     });
 
     await doc.save();
     res.json(doc);
   } catch (err) {
+    console.error("Cloudinary upload error:", err);
     next(err);
   }
 };

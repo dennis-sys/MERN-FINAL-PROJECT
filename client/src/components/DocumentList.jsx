@@ -39,11 +39,8 @@ export default function DocumentList() {
       {documents.length === 0 && <p>No documents yet.</p>}
 
       {documents.map((d) => {
-        // Use correct base URL from .env
-const finalUrl = d.fileUrl.startsWith("http")
-  ? d.fileUrl
-  : `${import.meta.env.VITE_API_URL}${d.fileUrl}`;
-
+        // 🔥 Cloudinary returns full URL already — no need for VITE_API_URL
+        const finalUrl = d.fileUrl;
 
         return (
           <div
@@ -53,7 +50,7 @@ const finalUrl = d.fileUrl.startsWith("http")
               padding: 16,
               marginBottom: 12,
               borderRadius: 8,
-              background: "var(--card-bg)"
+              background: "var(--card-bg)",
             }}
           >
             <h3>{d.title}</h3>
@@ -75,7 +72,7 @@ const finalUrl = d.fileUrl.startsWith("http")
                   background: "#005bbb",
                   color: "white",
                   border: "none",
-                  cursor: "pointer"
+                  cursor: "pointer",
                 }}
               >
                 Preview PDF
@@ -91,7 +88,7 @@ const finalUrl = d.fileUrl.startsWith("http")
                   borderRadius: 6,
                   background: "#222",
                   color: "white",
-                  textDecoration: "none"
+                  textDecoration: "none",
                 }}
               >
                 Download
@@ -113,7 +110,7 @@ const finalUrl = d.fileUrl.startsWith("http")
                   color: "white",
                   background: "red",
                   borderRadius: 6,
-                  border: "none"
+                  border: "none",
                 }}
               >
                 Delete
