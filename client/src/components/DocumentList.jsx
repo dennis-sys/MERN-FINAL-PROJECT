@@ -62,7 +62,7 @@ export default function DocumentList() {
               <strong>Department:</strong> {d.department}
             </p>
             <p>
-              <strong>Uploaded by:</strong> {d.uploadedBy?.email || "Unknown"}
+              <strong>Uploaded by:</strong> {d.uploadedBy?.email || ""}
             </p>
 
             <div style={{ marginTop: 12, display: "flex", gap: 12 }}>
