@@ -19,7 +19,7 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: () => ({
   folder: "cdms-documents",
-  resource_type: "raw",      // FORCE RAW ALWAYS
+  resource_type: "auto",      // changed to auto
   format: "pdf",
   type: "upload",
 }),
