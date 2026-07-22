@@ -2,17 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { PostContext } from "../context/PostContext";
 import UploadDocument from "./UploadDocument";
 import { useApi } from "../hooks/useApi";
-import DocumentViewer from "./DocumentViewer";
 
 export default function DocumentList() {
   const { posts: documents, fetchPosts: fetchDocuments } =
     useContext(PostContext);
 
   const [editing, setEditing] = useState(null);
-
-  // Document viewer state
-  const [preview, setPreview] = useState(null); // { url, filename }
-
   const api = useApi();
 
   useEffect(() => {
@@ -39,11 +34,7 @@ export default function DocumentList() {
       {documents.length === 0 && <p>No documents yet.</p>}
 
       {documents.map((d) => {
-        // 🔥 Completely sanitize fileUrl
-        const cleanUrl = (d.fileUrl || "").trim();
-
-        // 🔥 Always Cloudinary full URL — never prefix backend or Netlify
-        const finalUrl = cleanUrl;
+        const finalUrl = (d.fileUrl || "").trim();
 
         return (
           <div
@@ -58,34 +49,30 @@ export default function DocumentList() {
           >
             <h3>{d.title}</h3>
             <p>{d.description}</p>
-            <p>
-              <strong>Department:</strong> {d.department}
-            </p>
-            <p>
-              <strong>Uploaded by:</strong> {d.uploadedBy?.email || "email"}
-            </p>
+            <p><strong>Department:</strong> {d.department}</p>
+            <p><strong>Uploaded by:</strong> {d.uploadedBy?.email || "email"}</p>
 
             <div style={{ marginTop: 12, display: "flex", gap: 12 }}>
-              {/* Preview */}
-              <button
-                onClick={() => setPreview({ url: finalUrl, filename: d.filename })}
-                style={{
-                  padding: "6px 14px",
-                  borderRadius: 6,
-                  background: "#005bbb",
-                  color: "white",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                Preview
-              </button>
-
-              {/* Download */}
+              {/* Open in new tab */}
               <a
                 href={finalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                style={{
+                  padding: "6px 14px",
+                  borderRadius: 6,
+                  background: "#27ae60",
+                  color: "white",
+                  textDecoration: "none",
+                }}
+              >
+                ↗ Open
+              </a>
+
+              {/* Download */}
+              <a
+                href={finalUrl}
+                download={d.filename}
                 style={{
                   padding: "6px 14px",
                   borderRadius: 6,
@@ -122,12 +109,6 @@ export default function DocumentList() {
           </div>
         );
       })}
-
-      <DocumentViewer
-        fileUrl={preview?.url}
-        filename={preview?.filename}
-        onClose={() => setPreview(null)}
-      />
     </div>
   );
 }
