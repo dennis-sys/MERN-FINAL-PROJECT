@@ -15,10 +15,7 @@ const app = express();
 // CORS for frontend
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://candid-manatee-da20d7.netlify.app"
-    ],
+    origin: true, // allow all origins (Replit dev domain + localhost)
     credentials: true,
   })
 );
