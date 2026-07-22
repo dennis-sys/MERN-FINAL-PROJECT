@@ -3,10 +3,9 @@ import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+// Must match the pdfjs-dist version bundled inside react-pdf (5.4.296), not the
+// separately installed top-level package (5.4.394) which causes a version mismatch.
+pdfjs.GlobalWorkerOptions.workerSrc = "https://unpkg.com/pdfjs-dist@5.4.296/build/pdf.worker.min.mjs";
 
 // Derive file type from filename or URL
 function getFileType(filename, url) {
