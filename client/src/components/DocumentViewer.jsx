@@ -18,8 +18,26 @@ function getFileType(filename, url) {
   return "other";
 }
 
-// Microsoft Office Online Viewer (free, no account)
-function OfficeViewer({ url }) {
+// Microsoft Office Online Viewer — only works with public URLs
+function OfficeViewer({ url, filename }) {
+  const isLocal = url.startsWith("/");
+  if (isLocal) {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", height: "100%", background: "#1a1a2e", color: "#fff", gap: 16, padding: 32 }}>
+        <span style={{ fontSize: 48 }}>📄</span>
+        <p style={{ fontSize: 16, color: "#ccc", textAlign: "center" }}>
+          Office documents ({filename}) can't be previewed inline.<br />Download the file to open it.
+        </p>
+        <a
+          href={url}
+          download={filename}
+          style={{ ...navBtn, background: "#27ae60", textDecoration: "none", fontSize: 15, padding: "10px 24px" }}
+        >
+          ⬇ Download {filename}
+        </a>
+      </div>
+    );
+  }
   const src = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(url)}`;
   return (
     <iframe
