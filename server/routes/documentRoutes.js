@@ -14,16 +14,15 @@ import cloudinary from "../config/cloudinary.js";
 
 const router = express.Router();
 
-// Correct Cloudinary RAW storage for PDFs
+// Accept any file type — resource_type "auto" handles images, video, raw (docs, pdf, etc.)
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: () => ({
-  folder: "cdms-documents",
-  resource_type: "auto",      // changed to auto
-  format: "pdf",
-  type: "upload",
-}),
-
+  params: (req, file) => ({
+    folder: "cdms-documents",
+    resource_type: "auto",
+    public_id: `${Date.now()}-${file.originalname.replace(/\s+/g, "_")}`,
+    type: "upload",
+  }),
 });
 
 const upload = multer({ storage });

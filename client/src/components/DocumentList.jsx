@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { PostContext } from "../context/PostContext";
 import UploadDocument from "./UploadDocument";
 import { useApi } from "../hooks/useApi";
-import PdfModal from "./PdfModal";
+import DocumentViewer from "./DocumentViewer";
 
 export default function DocumentList() {
   const { posts: documents, fetchPosts: fetchDocuments } =
@@ -10,8 +10,8 @@ export default function DocumentList() {
 
   const [editing, setEditing] = useState(null);
 
-  // PDF viewer modal
-  const [previewUrl, setPreviewUrl] = useState(null);
+  // Document viewer state
+  const [preview, setPreview] = useState(null); // { url, filename }
 
   const api = useApi();
 
@@ -66,9 +66,9 @@ export default function DocumentList() {
             </p>
 
             <div style={{ marginTop: 12, display: "flex", gap: 12 }}>
-              {/* Preview PDF */}
+              {/* Preview */}
               <button
-                onClick={() => setPreviewUrl(finalUrl)}
+                onClick={() => setPreview({ url: finalUrl, filename: d.filename })}
                 style={{
                   padding: "6px 14px",
                   borderRadius: 6,
@@ -78,7 +78,7 @@ export default function DocumentList() {
                   cursor: "pointer",
                 }}
               >
-                Preview PDF
+                Preview
               </button>
 
               {/* Download */}
@@ -123,8 +123,11 @@ export default function DocumentList() {
         );
       })}
 
-      {/* PDF Modal */}
-      <PdfModal fileUrl={previewUrl} onClose={() => setPreviewUrl(null)} />
+      <DocumentViewer
+        fileUrl={preview?.url}
+        filename={preview?.filename}
+        onClose={() => setPreview(null)}
+      />
     </div>
   );
 }

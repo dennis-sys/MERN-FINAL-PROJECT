@@ -68,7 +68,12 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
         {departments.map(d=> <option key={d} value={d}>{d}</option>)}
       </select>
 
-      <input type="file" onChange={e=>setFile(e.target.files[0])} style={{ marginBottom: 8 }} />
+      <input
+        type="file"
+        accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.webp,.bmp,.svg,.txt,.csv"
+        onChange={e=>setFile(e.target.files[0])}
+        style={{ marginBottom: 8 }}
+      />
 
       <button type="submit">Save Document</button>
     </form>
