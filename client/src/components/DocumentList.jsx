@@ -34,7 +34,14 @@ export default function DocumentList() {
       {documents.length === 0 && <p>No documents yet.</p>}
 
       {documents.map((d) => {
-        const finalUrl = (d.fileUrl || "").trim();
+        const rawUrl = (d.fileUrl || "").trim();
+        // GridFS paths are relative (/api/files/:id). Prefix with the backend
+        // base URL so they resolve correctly when the frontend is hosted
+        // separately (e.g. Netlify) and not proxied to the backend.
+        const apiBase = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+        const finalUrl = rawUrl.startsWith("/api/files/")
+          ? `${apiBase}${rawUrl}`
+          : rawUrl;
 
         return (
           <div
