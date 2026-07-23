@@ -38,7 +38,7 @@ export default function DocumentList() {
         // GridFS paths are relative (/api/files/:id). Prefix with the backend
         // base URL so they resolve correctly when the frontend is hosted
         // separately (e.g. Netlify) and not proxied to the backend.
-        const apiBase = (import.meta.env.VITE_API_URL || "").replace(/\/$/, "");
+        const apiBase = (import.meta.env.VITE_API_URL || "https://cdms-91w6.onrender.com").replace(/\/$/, "");
         const finalUrl = rawUrl.startsWith("/api/files/")
           ? `${apiBase}${rawUrl}`
           : rawUrl;
