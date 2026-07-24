@@ -3,7 +3,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 120px;
+  padding: 40px 16px 40px;
+  box-sizing: border-box;
+  min-height: 100vh;
 }
 
 /* ⭐ Futuristic glowing CDMS */
@@ -23,9 +25,11 @@
 
 /* Center card */
 .login-card {
-  width: 430px;
+  width: 100%;
+  max-width: 430px;
   padding: 35px;
   border-radius: 15px;
+  box-sizing: border-box;
 
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
@@ -43,6 +47,7 @@
   border: 1px solid #88cfff;
   background: rgba(255, 255, 255, 0.9);
   font-size: 15px;
+  box-sizing: border-box;
 }
 
 /* Button */
@@ -71,4 +76,43 @@
   margin-top: 15px;
   text-align: center;
   color: var(--muted);
+}
+
+/* ── Tablet (≤ 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  .cdms-title {
+    font-size: 42px;
+  }
+
+  .login-card {
+    padding: 28px 24px;
+  }
+}
+
+/* ── Mobile (≤ 480px) ─────────────────────────────── */
+@media (max-width: 480px) {
+  .login-page {
+    padding-top: 28px;
+  }
+
+  .cdms-title {
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 18px;
+  }
+
+  .login-card {
+    padding: 22px 18px;
+    border-radius: 12px;
+  }
+
+  .login-card input {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .login-card button {
+    font-size: 15px;
+    padding: 11px;
+  }
 }

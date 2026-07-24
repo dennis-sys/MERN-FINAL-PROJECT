@@ -23,8 +23,8 @@ function Layout({ children }) {
     <>
       {!hideHeader && <Header />}
 
-      <div style={{ display: "flex", justifyContent: "center", paddingTop: hideHeader ? 0 : 120 }}>
-        <div style={{ width: "100%", maxWidth: 1100, padding: 24 }}>
+      <div className={`page-wrapper${hideHeader ? " no-header" : ""}`}>
+        <div className="page-inner">
           {children}
         </div>
       </div>

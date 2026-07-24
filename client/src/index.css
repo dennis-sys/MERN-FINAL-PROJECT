@@ -170,8 +170,48 @@ button[disabled] { opacity: 0.6; cursor: not-allowed; }
   margin-bottom: 16px;
 }
 
-/* responsive */
-@media (max-width: 680px) {
-  .header-left, .header-right { width: 110px; }
-  .title-typed { font-size: 14px; }
+/* ── Page layout wrappers (set by App.jsx Layout) ─── */
+.page-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-top: 80px; /* below fixed header */
+  box-sizing: border-box;
+}
+
+.page-wrapper.no-header {
+  padding-top: 0;
+}
+
+.page-inner {
+  width: 100%;
+  max-width: 1100px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* ── Responsive ────────────────────────────────────── */
+
+/* Tablet (≤ 768px) */
+@media (max-width: 768px) {
+  .page-wrapper { padding-top: 70px; }
+  .page-inner { padding: 16px; }
+
+  main, .content { margin-top: 80px; }
+
+  .header-left, .header-right { width: 140px; }
+}
+
+/* Mobile (≤ 480px) */
+@media (max-width: 480px) {
+  .page-wrapper { padding-top: 60px; }
+  .page-inner { padding: 12px; }
+
+  main, .content { margin-top: 60px; }
+
+  .header-left, .header-right { width: 80px; }
+  .title-typed { font-size: 12px; }
+
+  input, textarea, select {
+    font-size: 16px; /* prevents iOS zoom on focus */
+  }
 }

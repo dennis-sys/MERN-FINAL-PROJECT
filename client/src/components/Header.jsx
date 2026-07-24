@@ -12,12 +12,15 @@ export default function Header() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout(); // clears token + user
-    navigate("/register", { replace: true }); // back to landing page
+    logout();
+    navigate("/register", { replace: true });
   };
 
   return (
     <header className="header-container" data-theme={theme}>
+      {/* Left spacer — mirrors .header-actions width so the title stays centred */}
+      <div className="header-spacer" aria-hidden="true" />
+
       <div className="header-title">
         <Typewriter
           options={{
@@ -30,12 +33,10 @@ export default function Header() {
       </div>
 
       <div className="header-actions">
-        {/* Theme Toggle */}
         <button className="theme-toggle-btn" onClick={toggleTheme}>
           {theme === "light" ? "🌙 Dark" : "☀️ Light"}
         </button>
 
-        {/* Logout Button (only when authenticated) */}
         {token && (
           <button className="logout-btn" onClick={handleLogout}>
             Logout

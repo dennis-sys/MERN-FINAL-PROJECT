@@ -5,50 +5,58 @@
   position: fixed;
   top: 0;
   left: 0;
+  box-sizing: border-box;
 
-  padding: 16px 40px;
+  padding: 14px 40px;
 
   display: flex;
-  justify-content: center; /* The title stays centered */
+  justify-content: space-between;
   align-items: center;
 
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   z-index: 1000;
-
-  /* Theme-based backgrounds applied below */
+  gap: 12px;
 }
 
-/* Title */
+/* Title — takes remaining space, centered */
 .header-title {
-  font-size: 22px;
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
   font-weight: bold;
   color: var(--text);
   user-select: none;
+  overflow: hidden;
+  min-width: 0; /* allow flex shrink */
 }
 
-/* New flex wrapper for theme + logout buttons */
-.header-actions {
-  position: absolute;
-  right: 80px;                /* Align to right side */
-  top: 50%;
-  transform: translateY(-50%);
+/* Spacer on the left so title stays visually centered */
+.header-spacer {
+  flex: 0 0 auto;
+  width: 140px; /* roughly match .header-actions width */
+}
 
+/* Button group — right side */
+.header-actions {
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 /* Theme toggle button */
 .theme-toggle-btn {
-  padding: 6px 16px;
+  padding: 6px 14px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 14px;
   border: none;
   transition: 0.2s ease;
   background: var(--button-bg);
   color: var(--button-text);
+  white-space: nowrap;
 }
 
 .theme-toggle-btn:hover {
@@ -57,14 +65,16 @@
 
 /* Logout button */
 .logout-btn {
-  padding: 6px 16px;
+  padding: 6px 14px;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
+  font-size: 14px;
   border: none;
   transition: 0.2s ease;
   background: var(--accent, #ff5252);
   color: white;
+  white-space: nowrap;
 }
 
 .logout-btn:hover {
@@ -72,19 +82,67 @@
 }
 
 /* Light Theme */
-[data-theme="light"] {
+[data-theme="light"] .header-container,
+[data-theme="light"].header-container {
   --text: #003f7f;
   --button-bg: #e0f0ff;
   --button-text: #003f7f;
-
   background: rgba(255, 255, 255, 0.7);
 }
 
 /* Dark Theme */
-[data-theme="dark"] {
+[data-theme="dark"] .header-container,
+[data-theme="dark"].header-container {
   --text: #e0eaff;
   --button-bg: #1b2735;
   --button-text: #c9dfff;
-
   background: rgba(10, 20, 35, 0.5);
+}
+
+/* ── Tablet (≤ 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  .header-container {
+    padding: 12px 20px;
+  }
+
+  .header-title {
+    font-size: 14px;
+  }
+
+  .header-spacer {
+    width: 100px;
+  }
+
+  .theme-toggle-btn,
+  .logout-btn {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+}
+
+/* ── Mobile (≤ 480px) ─────────────────────────────── */
+@media (max-width: 480px) {
+  .header-container {
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .header-title {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+
+  .header-spacer {
+    display: none; /* drop the left spacer; title shifts left, that's fine */
+  }
+
+  .theme-toggle-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .logout-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
 }

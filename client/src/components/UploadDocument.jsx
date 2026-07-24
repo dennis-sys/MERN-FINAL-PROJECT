@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useApi } from "../hooks/useApi";
 import { AuthContext } from "../context/AuthContext";
+import "./UploadDocument.css";
 
 const departments = [
   "Registration and Coordination",
@@ -44,10 +45,12 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
       form.append("department", department);
       if (file) form.append("file", file);
 
-      // set true for FormData
       await api.post("/api/documents", form, true);
       onSuccess();
-      setTitle(""); setDescription(""); setDepartment(user?.department || ""); setFile(null);
+      setTitle("");
+      setDescription("");
+      setDepartment(user?.department || "");
+      setFile(null);
     } catch (err) {
       console.error(err);
       setError("Upload failed");
@@ -55,24 +58,31 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ padding: 20, border: "1px solid #ddd", marginBottom: 20, maxWidth: 900 }}>
-      <h2>Upload Document</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <form className="upload-form" onSubmit={handleSubmit}>
+      <h2>{docToEdit ? "Edit Document" : "Upload Document"}</h2>
+      {error && <p style={{ color: "red", margin: "0 0 8px" }}>{error}</p>}
 
-      <input placeholder="Title" value={title} onChange={e=>setTitle(e.target.value)} style={{ width: "100%", marginBottom: 8 }} />
+      <input
+        placeholder="Title"
+        value={title}
+        onChange={e => setTitle(e.target.value)}
+      />
 
-      <textarea placeholder="Description" value={description} onChange={e=>setDescription(e.target.value)} style={{ width: "100%", marginBottom: 8 }} />
+      <textarea
+        placeholder="Description"
+        value={description}
+        onChange={e => setDescription(e.target.value)}
+      />
 
-      <select value={department} onChange={e=>setDepartment(e.target.value)} style={{ width: "100%", marginBottom: 8 }}>
+      <select value={department} onChange={e => setDepartment(e.target.value)}>
         <option value="">Select Department</option>
-        {departments.map(d=> <option key={d} value={d}>{d}</option>)}
+        {departments.map(d => <option key={d} value={d}>{d}</option>)}
       </select>
 
       <input
         type="file"
         accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.webp,.bmp,.svg,.txt,.csv"
-        onChange={e=>setFile(e.target.files[0])}
-        style={{ marginBottom: 8 }}
+        onChange={e => setFile(e.target.files[0])}
       />
 
       <button type="submit">Save Document</button>

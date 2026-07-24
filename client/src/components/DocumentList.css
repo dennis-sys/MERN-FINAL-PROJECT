@@ -1,0 +1,116 @@
+/* DocumentList layout */
+.doc-list-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* Individual document card */
+.doc-card {
+  border: 1px solid #ddd;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  background: var(--card-bg);
+  box-sizing: border-box;
+}
+
+.doc-card h3 {
+  margin: 0 0 4px;
+  font-size: 17px;
+  word-break: break-word;
+}
+
+.doc-card p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* Button row */
+.doc-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Shared button / link base */
+.btn-open,
+.btn-download {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.btn-open {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-download {
+  background: #222;
+  color: white;
+}
+
+.btn-edit {
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.btn-delete {
+  padding: 7px 14px;
+  color: white;
+  background: #e53935;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* ── Tablet (≤ 768px) ─────────────────────────────── */
+@media (max-width: 768px) {
+  .doc-card {
+    padding: 14px;
+  }
+
+  .doc-card h3 {
+    font-size: 16px;
+  }
+}
+
+/* ── Mobile (≤ 480px) ─────────────────────────────── */
+@media (max-width: 480px) {
+  .doc-card {
+    padding: 12px;
+    border-radius: 6px;
+  }
+
+  .doc-card h3 {
+    font-size: 15px;
+  }
+
+  .doc-card p {
+    font-size: 13px;
+  }
+
+  .doc-actions {
+    gap: 8px;
+  }
+
+  .btn-open,
+  .btn-download,
+  .btn-edit,
+  .btn-delete {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
