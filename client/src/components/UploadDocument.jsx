@@ -21,6 +21,7 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
   const [department, setDepartment] = useState(user?.department || "");
   const [file, setFile] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (docToEdit) {
@@ -38,6 +39,7 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
     }
     setError("");
 
+    setLoading(true);
     try {
       const form = new FormData();
       form.append("title", title);
@@ -54,6 +56,8 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
     } catch (err) {
       console.error(err);
       setError("Upload failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -66,15 +70,17 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
         placeholder="Title"
         value={title}
         onChange={e => setTitle(e.target.value)}
+        disabled={loading}
       />
 
       <textarea
         placeholder="Description"
         value={description}
         onChange={e => setDescription(e.target.value)}
+        disabled={loading}
       />
 
-      <select value={department} onChange={e => setDepartment(e.target.value)}>
+      <select value={department} onChange={e => setDepartment(e.target.value)} disabled={loading}>
         <option value="">Select Department</option>
         {departments.map(d => <option key={d} value={d}>{d}</option>)}
       </select>
@@ -83,9 +89,13 @@ export default function UploadDocument({ docToEdit, onSuccess }) {
         type="file"
         accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.webp,.bmp,.svg,.txt,.csv"
         onChange={e => setFile(e.target.files[0])}
+        disabled={loading}
       />
 
-      <button type="submit">Save Document</button>
+      <button type="submit" disabled={loading} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+        {loading && <span className="btn-spinner" />}
+        {loading ? "Saving…" : "Save Document"}
+      </button>
     </form>
   );
 }
