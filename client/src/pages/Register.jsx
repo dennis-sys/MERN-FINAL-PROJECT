@@ -27,7 +27,8 @@ export default function Register() {
     "ICT and Compliance",
     "Finance and Accounts",
     "Legal",
-    "CEO's Research and Policy"
+    "Research and Policy",
+    "CEO's Office"
   ];
 
   const handleSubmit = async (e) => {
