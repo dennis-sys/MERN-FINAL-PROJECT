@@ -4,7 +4,7 @@ import { useApi } from "../hooks/useApi";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
-import "./Register.css";  // 👈 add CSS file
+import "./Register.css";
 
 export default function Register() {
   const api = useApi();
@@ -18,6 +18,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [department, setDepartment] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const departments = [
     "Registration and Coordination",
@@ -31,24 +32,25 @@ export default function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await api.post("/api/auth/register", {
         email,
         password,
-        department
+        department,
       });
       setToken(res.token);
       setUser(res.user);
       navigate("/home");
     } catch (err) {
       alert(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="register-page">
-
-      {/* ⭐ Futuristic CDMS Title ⭐ */}
       <div className="cdms-title">
         <Typewriter
           options={{
@@ -60,7 +62,6 @@ export default function Register() {
         />
       </div>
 
-      {/* ⭐ Center Card Form ⭐ */}
       <div className="register-card">
         <h2>Register</h2>
 
@@ -71,6 +72,7 @@ export default function Register() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
 
           <input
@@ -79,12 +81,14 @@ export default function Register() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
 
           <select
             value={department}
             onChange={(e) => setDepartment(e.target.value)}
             required
+            disabled={loading}
           >
             <option value="">Select department</option>
             {departments.map((d) => (
@@ -94,7 +98,10 @@ export default function Register() {
             ))}
           </select>
 
-          <button type="submit">Create Account</button>
+          <button type="submit" disabled={loading} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {loading && <span className="btn-spinner" />}
+            {loading ? "Creating account…" : "Create Account"}
+          </button>
         </form>
 
         <p className="login-link">

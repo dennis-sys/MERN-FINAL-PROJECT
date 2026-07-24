@@ -4,7 +4,7 @@ import { useApi } from "../hooks/useApi";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
-import "./Login.css"; // 👈 Add CSS file
+import "./Login.css";
 
 export default function Login() {
   const api = useApi();
@@ -17,9 +17,11 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await api.post("/api/auth/login", { email, password });
       setToken(res.token);
@@ -27,13 +29,13 @@ export default function Login() {
       navigate("/home");
     } catch (err) {
       alert(err.message || "Login failed");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
-
-      {/* ⭐ Glowing Futuristic CDMS Title ⭐ */}
       <div className="cdms-title">
         <Typewriter
           options={{
@@ -45,18 +47,17 @@ export default function Login() {
         />
       </div>
 
-      {/* ⭐ Glass-card Login Form ⭐ */}
       <div className="login-card">
         <h2>Login</h2>
 
         <form onSubmit={handleSubmit}>
-
           <input
             placeholder="Email"
             value={email}
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={loading}
           />
 
           <input
@@ -65,9 +66,13 @@ export default function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
 
-          <button type="submit">Login</button>
+          <button type="submit" disabled={loading} style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {loading && <span className="btn-spinner" />}
+            {loading ? "Logging in…" : "Login"}
+          </button>
         </form>
 
         <p className="register-link">
