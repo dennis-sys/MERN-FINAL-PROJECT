@@ -9,6 +9,7 @@ export default function DocumentList() {
     useContext(PostContext);
 
   const [editing, setEditing] = useState(null);
+  const [deleting, setDeleting] = useState(null); // id of the doc being deleted
   const api = useApi();
 
   useEffect(() => {
@@ -17,8 +18,13 @@ export default function DocumentList() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this document?")) return;
-    await api.del(`/api/documents/${id}`);
-    fetchDocuments();
+    setDeleting(id);
+    try {
+      await api.del(`/api/documents/${id}`);
+      fetchDocuments();
+    } finally {
+      setDeleting(null);
+    }
   };
 
   return (
@@ -77,8 +83,14 @@ export default function DocumentList() {
               </button>
 
               {/* Delete */}
-              <button className="btn-delete" onClick={() => handleDelete(d._id)}>
-                Delete
+              <button
+                className="btn-delete"
+                onClick={() => handleDelete(d._id)}
+                disabled={deleting === d._id}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+              >
+                {deleting === d._id && <span className="btn-spinner" />}
+                {deleting === d._id ? "Deleting…" : "Delete"}
               </button>
             </div>
           </div>
