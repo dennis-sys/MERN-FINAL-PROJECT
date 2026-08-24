@@ -36,7 +36,10 @@ async function deleteFromGridFS(fileId) {
 
 export const getDocuments = async (req, res, next) => {
   try {
-    const docs = await Document.find()
+    const filter = req.user?.department
+      ? { department: req.user.department }
+      : {};
+    const docs = await Document.find(filter)
       .populate("uploadedBy", "email department")
       .sort({ createdAt: -1 });
     res.json(docs);

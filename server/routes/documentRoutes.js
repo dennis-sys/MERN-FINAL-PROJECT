@@ -7,6 +7,7 @@ import {
   updateDocument,
   deleteDocument
 } from "../controllers/documentController.js";
+import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -14,10 +15,10 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 // ---------------- ROUTES ----------------
-router.get("/", getDocuments);
-router.get("/:id", getDocument);
-router.post("/", upload.single("file"), createDocument);
-router.put("/:id", updateDocument);
-router.delete("/:id", deleteDocument);
+router.get("/", protect, getDocuments);
+router.get("/:id", protect, getDocument);
+router.post("/", protect, upload.single("file"), createDocument);
+router.put("/:id", protect, updateDocument);
+router.delete("/:id", protect, deleteDocument);
 
 export default router;

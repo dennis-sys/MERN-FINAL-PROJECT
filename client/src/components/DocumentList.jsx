@@ -55,7 +55,13 @@ export default function DocumentList() {
             <h3>{d.title}</h3>
             <p>{d.description}</p>
             <p><strong>Department:</strong> {d.department}</p>
-            <p><strong>Uploaded by:</strong> {d.uploadedBy?.email || "email"}</p>
+            <p><strong>Uploaded by:</strong> {d.uploadedBy?.email || "Unknown user"}</p>
+            <p>
+              <strong>Uploaded on:</strong>{" "}
+              {d.createdAt
+                ? new Date(d.createdAt).toLocaleString()
+                : "Date unavailable"}
+            </p>
 
             <div className="doc-actions">
               {/* Open in new tab */}
