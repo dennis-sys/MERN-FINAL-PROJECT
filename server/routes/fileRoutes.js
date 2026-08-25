@@ -26,7 +26,7 @@ router.get("/:fileId", async (req, res, next) => {
     res.set("Content-Type", file.contentType || "application/octet-stream");
     res.set(
       "Content-Disposition",
-      `inline; filename="${encodeURIComponent(file.filename)}"`
+      `${req.query.download === "1" ? "attachment" : "inline"}; filename="${encodeURIComponent(file.filename)}"`
     );
     res.set("Cache-Control", "private, max-age=3600");
 

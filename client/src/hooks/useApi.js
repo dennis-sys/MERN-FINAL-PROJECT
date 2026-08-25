@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useCallback, useContext, useMemo } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const BASE_URL = import.meta.env.VITE_API_URL || "";
@@ -6,17 +6,20 @@ const BASE_URL = import.meta.env.VITE_API_URL || "";
 export const useApi = () => {
   const { token } = useContext(AuthContext);
 
-  const buildUrl = (url) => `${BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+  const buildUrl = useCallback(
+    (url) => `${BASE_URL}${url.startsWith("/") ? "" : "/"}${url}`,
+    []
+  );
 
-  const get = async (url) => {
+  const get = useCallback(async (url) => {
     const res = await fetch(buildUrl(url), {
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     });
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
     return res.json();
-  };
+  }, [buildUrl, token]);
 
-  const post = async (url, data, isFormData = false) => {
+  const post = useCallback(async (url, data, isFormData = false) => {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
     if (!isFormData) headers["Content-Type"] = "application/json";
 
@@ -28,9 +31,9 @@ export const useApi = () => {
 
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
     return res.json();
-  };
+  }, [buildUrl, token]);
 
-  const put = async (url, data) => {
+  const put = useCallback(async (url, data) => {
     const res = await fetch(buildUrl(url), {
       method: "PUT",
       headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
@@ -38,16 +41,16 @@ export const useApi = () => {
     });
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
     return res.json();
-  };
+  }, [buildUrl, token]);
 
-  const del = async (url) => {
+  const del = useCallback(async (url) => {
     const res = await fetch(buildUrl(url), {
       method: "DELETE",
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     });
     if (!res.ok) throw new Error(`Request failed: ${res.status}`);
     return res.json();
-  };
+  }, [buildUrl, token]);
 
-  return { get, post, put, del };
+  return useMemo(() => ({ get, post, put, del }), [get, post, put, del]);
 };
