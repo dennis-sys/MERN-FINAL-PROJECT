@@ -1,0 +1,63 @@
+.dashboard-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  margin: 0 auto 24px;
+  padding: 5px;
+  box-sizing: border-box;
+  background: var(--card-bg, var(--card));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(71, 167, 255, 0.06);
+}
+
+.dashboard-nav-tab {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 16px;
+  border-radius: 7px;
+  color: var(--muted);
+  text-align: center;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.dashboard-nav-tab:hover {
+  color: var(--text);
+  background: rgba(71, 167, 255, 0.1);
+}
+
+.dashboard-nav-tab.active {
+  color: #fff;
+  background: var(--accent, #47a7ff);
+}
+
+.dashboard-section {
+  padding: 32px;
+  background: var(--card-bg, var(--card));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(71, 167, 255, 0.05);
+}
+
+.dashboard-section h2 {
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .dashboard-nav {
+    margin-bottom: 18px;
+  }
+
+  .dashboard-nav-tab {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
+
+  .dashboard-section {
+    padding: 22px 16px;
+  }
+}

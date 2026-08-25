@@ -6,7 +6,10 @@ import { AuthProvider, AuthContext } from "./context/AuthContext";
 import DocumentList from "./components/DocumentList";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import ImpactMap from "./pages/ImpactMap";
+import About from "./pages/About";
 import Header from "./components/Header";
+import DashboardNav from "./components/DashboardNav";
 import { ThemeProvider } from "./context/ThemeContext";
 import "./pdf-worker.js";
 
@@ -71,7 +74,32 @@ export default function App() {
                 element={
                   <RequireAuth>
                     <Layout>
-                      <DocumentList />
+                      <>
+                        <DashboardNav />
+                        <DocumentList />
+                      </>
+                    </Layout>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/impact-map"
+                element={
+                  <RequireAuth>
+                    <Layout>
+                      <ImpactMap />
+                    </Layout>
+                  </RequireAuth>
+                }
+              />
+
+              <Route
+                path="/about"
+                element={
+                  <RequireAuth>
+                    <Layout>
+                      <About />
                     </Layout>
                   </RequireAuth>
                 }
